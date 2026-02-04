@@ -54,6 +54,18 @@ public class Order {
         this.updatedAt = Instant.now();
     }
 
+    public static Order restore(UUID id, UUID investorId, UUID productId, Integer quantity,
+                                BigDecimal unitPrice, BigDecimal totalAmount, OrderStatus status,
+                                Instant createdAt, Instant updatedAt) {
+        Order order = new Order(investorId, productId, quantity, unitPrice);
+        order.id = id;
+        order.createdAt = createdAt;
+        order.updatedAt = updatedAt;
+        order.status = status;
+        order.totalAmount = totalAmount;
+        return order;
+    }
+
     public UUID getId() { return id; }
     public UUID getInvestorId() { return investorId; }
     public UUID getProductId() { return productId; }
