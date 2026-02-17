@@ -1,4 +1,4 @@
-package com.elias.orderservice.infra.persistence;
+package com.elias.orderservice.infrastructure.order.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;

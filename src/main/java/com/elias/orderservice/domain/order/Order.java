@@ -1,4 +1,4 @@
-package com.elias.orderservice.core.domain;
+package com.elias.orderservice.domain.order;
 
 import com.elias.investcommon.domain.OrderStatus;
 

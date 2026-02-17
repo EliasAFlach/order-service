@@ -1,9 +1,7 @@
-package com.elias.orderservice.infra.persistence;
+package com.elias.orderservice.infrastructure.order.persistence;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -35,7 +33,6 @@ class OrderEntity {
     @Column(nullable = false)
     private BigDecimal totalAmount;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private String status;
 

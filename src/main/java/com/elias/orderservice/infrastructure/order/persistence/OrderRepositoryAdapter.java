@@ -1,8 +1,8 @@
-package com.elias.orderservice.infra.persistence;
+package com.elias.orderservice.infrastructure.order.persistence;
 
 import com.elias.investcommon.domain.OrderStatus;
-import com.elias.orderservice.core.domain.Order;
-import com.elias.orderservice.core.ports.outgoing.OrderRepositoryPort;
+import com.elias.orderservice.domain.order.Order;
+import com.elias.orderservice.application.order.gateways.OrderRepositoryGateway;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class OrderRepositoryAdapter implements OrderRepositoryPort {
+public class OrderRepositoryAdapter implements OrderRepositoryGateway {
 
     private final SpringDataOrderRepository springRepository;
 
@@ -24,7 +24,7 @@ public class OrderRepositoryAdapter implements OrderRepositoryPort {
         entity.setQuantity(order.getQuantity());
         entity.setUnitPrice(order.getUnitPrice());
         entity.setTotalAmount(order.getTotalAmount());
-        entity.setStatus(order.getStatus().name()); // Enum -> String
+        entity.setStatus(order.getStatus().name());
         entity.setCreatedAt(order.getCreatedAt());
         OrderEntity savedEntity = springRepository.save(entity);
 

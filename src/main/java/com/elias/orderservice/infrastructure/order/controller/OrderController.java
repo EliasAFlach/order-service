@@ -1,7 +1,8 @@
-package com.elias.orderservice.infra.api;
+package com.elias.orderservice.infrastructure.order.controller;
 
-import com.elias.orderservice.core.usecase.CreateOrderUseCase;
+import com.elias.orderservice.application.order.usecases.CreateOrderUseCase;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ public class OrderController {
     }
 
     @PostMapping
+    @Transactional
     public ResponseEntity<Void> create(@RequestBody CreateOrderRequest request) {
         var id = createOrderUseCase.execute(
                 request.investorId(),
