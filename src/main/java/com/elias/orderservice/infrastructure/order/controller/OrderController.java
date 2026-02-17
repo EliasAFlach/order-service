@@ -23,7 +23,6 @@ public class OrderController {
     }
 
     @PostMapping
-    @Transactional
     public ResponseEntity<Void> create(@RequestBody CreateOrderRequest request) {
         var id = createOrderUseCase.execute(
                 request.investorId(),
@@ -38,7 +37,7 @@ public class OrderController {
     public record CreateOrderRequest(
             UUID investorId,
             UUID productId,
-            Integer quantity,
+            BigDecimal quantity,
             BigDecimal unitPrice
     ) {}
 }

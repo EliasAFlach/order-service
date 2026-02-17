@@ -5,13 +5,16 @@ import com.elias.orderservice.application.order.gateways.OrderEventPublisherGate
 import com.elias.orderservice.domain.order.Order;
 import com.elias.orderservice.infrastructure.outbox.persistence.OutboxEntity;
 import com.elias.orderservice.infrastructure.outbox.persistence.SpringDataOutboxRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import tools.jackson.databind.ObjectMapper;
 
 import java.time.Instant;
+import java.util.UUID;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class KafkaOrderEventPublisher implements OrderEventPublisherGateway {
@@ -25,7 +28,14 @@ public class KafkaOrderEventPublisher implements OrderEventPublisherGateway {
     @Override
     public void publishOrderCreated(Order order) {
         try {
+            UUID correlationId = UUID.randomUUID();
+
             OrderCreatedEvent event = OrderCreatedEvent.builder()
+                    .eventId(UUID.randomUUID())
+                    .occurredOn(Instant.now())
+                    .schemaVersion("1")
+                    .correlationId(correlationId)
+                    .causationId(null)
                     .orderId(order.getId())
                     .investorId(order.getInvestorId())
                     .productId(order.getProductId())
@@ -42,10 +52,12 @@ public class KafkaOrderEventPublisher implements OrderEventPublisherGateway {
 
             outboxRepository.save(outbox);
 
-            System.out.println("[OUTBOX] Evento salvo no banco de dados com sucesso!");
+            log.info("[OUTBOX] orderCreated salvo. orderId={} eventId={} correlationId={}",
+                    order.getId(), event.getEventId(), event.getCorrelationId());
 
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao serializar evento para o Outbox", e);
+            log.error("[OUTBOX] Falha ao salvar evento orderCreated. orderId={}", order.getId(), e);
+            throw new RuntimeException("Erro ao serializar/salvar evento no Outbox", e);
         }
     }
 }

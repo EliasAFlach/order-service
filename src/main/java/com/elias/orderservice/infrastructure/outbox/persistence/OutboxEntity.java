@@ -26,5 +26,12 @@ public class OutboxEntity {
     @Column(nullable = false)
     private Instant createdAt;
 
+    @Column
     private Instant processedAt;
+
+    @Column
+    private Integer attempts = 0;
+
+    @Column(columnDefinition = "TEXT")
+    private String lastError;
 }

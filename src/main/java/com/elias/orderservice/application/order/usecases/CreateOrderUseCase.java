@@ -3,6 +3,7 @@ package com.elias.orderservice.application.order.usecases;
 import com.elias.orderservice.application.order.gateways.OrderEventPublisherGateway;
 import com.elias.orderservice.application.order.gateways.OrderRepositoryGateway;
 import com.elias.orderservice.domain.order.Order;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -17,7 +18,8 @@ public class CreateOrderUseCase {
         this.orderEventPublisher = orderEventPublisher;
     }
 
-    public UUID execute(UUID investorId, UUID productId, Integer quantity, BigDecimal unitPrice) {
+    @Transactional
+    public UUID execute(UUID investorId, UUID productId, BigDecimal quantity, BigDecimal unitPrice) {
         Order order = Order.create(investorId, productId, quantity, unitPrice);
 
         orderRepository.save(order);

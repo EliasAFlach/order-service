@@ -25,7 +25,7 @@ class OrderEntity {
     private UUID productId;
 
     @Column(nullable = false)
-    private Integer quantity;
+    private BigDecimal quantity;
 
     @Column(nullable = false)
     private BigDecimal unitPrice;
