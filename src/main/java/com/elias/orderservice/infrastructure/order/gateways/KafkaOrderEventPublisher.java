@@ -26,10 +26,8 @@ public class KafkaOrderEventPublisher implements OrderEventPublisherGateway {
     private String topic;
 
     @Override
-    public void publishOrderCreated(Order order) {
+    public void publishOrderCreated(Order order, UUID correlationId) {
         try {
-            UUID correlationId = UUID.randomUUID();
-
             OrderCreatedEvent event = OrderCreatedEvent.builder()
                     .eventId(UUID.randomUUID())
                     .occurredOn(Instant.now())
@@ -56,7 +54,8 @@ public class KafkaOrderEventPublisher implements OrderEventPublisherGateway {
                     order.getId(), event.getEventId(), event.getCorrelationId());
 
         } catch (Exception e) {
-            log.error("[OUTBOX] Falha ao salvar evento orderCreated. orderId={}", order.getId(), e);
+            log.error("[OUTBOX] Falha ao salvar evento orderCreated. orderId={} correlationId={}",
+                    order.getId(), correlationId, e);
             throw new RuntimeException("Erro ao serializar/salvar evento no Outbox", e);
         }
     }

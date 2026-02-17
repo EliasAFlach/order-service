@@ -39,5 +39,9 @@ class OrderEntity {
     @Column(nullable = false)
     private Instant createdAt;
 
+    @Column
     private Instant updatedAt;
+
+    @Column(name = "idempotency_key", unique = true)
+    private String idempotencyKey;
 }
