@@ -6,4 +6,6 @@ import java.util.UUID;
 
 public interface OrderEventPublisherGateway {
     void publishOrderCreated(Order order, UUID correlationId);
+    void publishOrderValidated(Order order, UUID correlationId);
+    void publishRiskCheckRequested(Order order, UUID correlationId);
 }

@@ -29,5 +29,7 @@ app:
   kafka:
     topics:
       order-created: invest.orders.order-created
+      order-validated: invest.orders.order-validated
+      risk-check-requested: invest.orders.risk-check-requested
   outbox:
     relay-delay-ms: 5000

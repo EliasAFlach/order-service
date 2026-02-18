@@ -28,7 +28,7 @@ dependencies {
 
     implementation 'org.springframework.kafka:spring-kafka'
 
-    implementation 'com.elias.invest:invest-common:0.0.2-SNAPSHOT'
+    implementation 'com.elias.invest:invest-common:0.0.4-SNAPSHOT'
 
     runtimeOnly 'org.postgresql:postgresql'
     compileOnly 'org.projectlombok:lombok'

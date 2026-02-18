@@ -54,6 +54,14 @@ public class Order {
         this.updatedAt = Instant.now();
     }
 
+    public void requestRiskCheck() {
+        if (this.status != OrderStatus.VALIDATED) {
+            throw new IllegalStateException("Risk check can only be requested if currently VALIDATED");
+        }
+        this.status = OrderStatus.PENDING_RISK_CHECK;
+        this.updatedAt = Instant.now();
+    }
+
     public static Order restore(UUID id, UUID investorId, UUID productId, BigDecimal quantity,
                                 BigDecimal unitPrice, BigDecimal totalAmount, OrderStatus status,
                                 Instant createdAt, Instant updatedAt) {
